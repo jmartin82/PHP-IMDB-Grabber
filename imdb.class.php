@@ -389,12 +389,12 @@ class IMDB {
     */
     public function getType() {
         if (true === $this->isReady) {
-            if ($sReturn = IMDBHelper::matchRegex($this->_strSource, IMDB::IMDB_MEDIA_TYPE, 1)) {
+            if ($sMatch = IMDBHelper::matchRegex($this->sSource, IMDB::IMDB_MEDIA_TYPE, 1)) {
             // some cases there's no info in that place
-                if (is_string($sReturn)) {
+                if (is_string($sMatch)) {
                     // if we use onle trim, it strips useful characters
-                    $sReturn = str_replace("&nbsp;-&nbsp;", '', $sReturn);
-                    return trim($sReturn, " ");
+                    $sMatch = str_replace("&nbsp;-&nbsp;", '', $sMatch);
+                    return trim($sMatch, " ");
                 }
             }
         }
