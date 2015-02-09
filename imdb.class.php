@@ -123,6 +123,7 @@ class IMDB {
     const IMDB_VOTES         = '~<a href="ratings" class="tn15more">(.*) votes<\/a>~Ui';
     const IMDB_WRITER        = '~<h5>(?:Writer|Writers):<\/h5>(?:\s*)<div class="info-content">(.*)<\/div>~Ui';
     const IMDB_YEAR          = '~<a href="\/year\/(?:\d{4})\/">(.*)<\/a>~Ui';
+    const IMDB_MEDIA_TYPE    = '~<div class="infobar">(.*)<~Ui';
 
 
 
@@ -379,6 +380,25 @@ class IMDB {
         }
 
         return $this->sNotFound;
+    }
+    
+    /**
+    * Returns the type of the imdb media
+    *
+    * @return string Type of the imdb media
+    */
+    public function getType() {
+        if (true === $this->isReady) {
+            if ($sReturn = IMDBHelper::matchRegex($this->_strSource, IMDB::IMDB_MEDIA_TYPE, 1)) {
+            // some cases there's no info in that place
+                if (is_string($sReturn)) {
+                    // if we use onle trim, it strips useful characters
+                    $sReturn = str_replace("&nbsp;-&nbsp;", '', $sReturn);
+                    return trim($sReturn, " ");
+                }
+            }
+        }
+        return false;
     }
 
     /**
