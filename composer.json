@@ -1,5 +1,5 @@
 {
-  "name": "fabianbeiner/php-imdb-grabber",
+  "name": "jmartin82/php-imdb-grabber",
   "type": "library",
   "description": "This PHP library enables you to scrap data from IMDB.com.",
   "keywords": [
@@ -7,7 +7,7 @@
     "API",
     "Client"
   ],
-  "homepage": "https://github.com/FabianBeiner/PHP-IMDB-Grabber",
+  "homepage": "https://github.com/jmartin82/PHP-IMDB-Grabber",
   "license": "MIT",
   "authors": [
     {
