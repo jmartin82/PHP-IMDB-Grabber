@@ -384,7 +384,7 @@ class IMDB {
      *
      * @return string A list with linked cast members or $sNotFound.
      */
-    public function getCast($iLimit = 0, $bMore = true, ) {
+    public function getCast($iLimit = 0, $bMore = true) {
         if (true === $this->isReady) {
             $aMatch = IMDBHelper::matchRegex($this->sSource, self::IMDB_CAST);
             if (count($aMatch[2])) {
