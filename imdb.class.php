@@ -1365,7 +1365,7 @@ class IMDBHelper extends IMDB {
      * @return string Multiple results separeted by selected separator string.
      * @return array  Multiple results enclosed into native array.     
      */
-    public function arrayOutput($bArrayOutput, $sSeparator, $sNotFound, $aReturn = null, $bHaveMore = false) {
+    public static function arrayOutput($bArrayOutput, $sSeparator, $sNotFound, $aReturn = null, $bHaveMore = false) {
         if ($bArrayOutput){
           if ($aReturn == null || !is_array($aReturn)) {
               return array();
