@@ -1,26 +1,20 @@
 {
-  "name": "jmartin/php-imdb-grabber",
-  "type": "library",
-  "description": "This PHP library enables you to scrap data from IMDB.com.",
-  "keywords": [
-    "IMDb",
-    "API",
-    "Client"
-  ],
-  "homepage": "https://github.com/jmartin82/PHP-IMDB-Grabber",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Fabian Beiner",
-      "email": "fb@fabianbeiner.de",
-      "homepage": "https://fabianbeiner.de/"
-    }
-  ],
-  "autoload": {
+    "name": "jmartin/php-imdb-grabber",
+    "description": "This class enables you to retrieve data from IMDb.com with PHP.",
+    "license": "CC BY-NC-SA 3.0",
+    "authors": [
+        {
+            "name": "Jordi Martin",
+            "email": "jordimartin@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "4.5.*"
+    },
+    "require": {
+        "ext-curl": "*"
+    },
+    "autoload": {
         "classmap": ["imdb.class.php"]
-  },
-  "require": {
-    "ext-curl": "*",
-    "php": ">=5.5.0"
-  }
+    }
 }
