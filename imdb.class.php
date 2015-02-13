@@ -434,6 +434,7 @@ class IMDB
     public function getAkas()
     {
         if ($this->isReady) {
+            $arrReturn = array();
             $fCache = $this->_strRoot . '/cache/' . md5($this->_strId) . '.akas';
             if (file_exists($fCache)) {
                 $bolUseCache = true;
@@ -586,7 +587,11 @@ class IMDB
     {
         if ($this->isReady) {
             if ($strReturn = $this->matchRegex($this->_strSource, IMDB::IMDB_DESCRIPTION, 1)) {
-                return trim($strReturn);
+                $strReturn = trim($strReturn);
+                if(empty($strReturn)){
+                    return $this->strNotFound;
+                }
+                return $strReturn;
             }
         }
         return $this->strNotFound;
@@ -743,7 +748,8 @@ class IMDB
                 return $this->cleanString($sMatch);
             }
         }
-
+        throw new IMDBException("Can't get title", 1);
+        
         return $this->strNotFound;  //TODO EXCEPTION
     }
 
