@@ -109,7 +109,7 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedPunch['genre'] = array('Drama','Romance', 'Thriller');
         $expectedPunch['runtime'] = 0;
         $expectedPunch['year'] = 0;
-        $expectedPunch['title'] = "Punch (TV Series 2014–2015)";
+        $expectedPunch['title'] = "Punch";
         $expectedPunch['country'] = array('South Korea');
         $expectedPunch['release_date'] = "15 December 2014  (South Korea)";
         $expectedPunch['director'] = array();
@@ -146,7 +146,7 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedRubicon['genre'] = array('Crime','Drama', 'Mystery', 'Thriller');
         $expectedRubicon['runtime'] = 45;
         $expectedRubicon['year'] = 0;
-        $expectedRubicon['title'] = "Rubicon (TV Series 2010– )";
+        $expectedRubicon['title'] = "Rubicon";
         $expectedRubicon['country'] = array('USA');
         $expectedRubicon['release_date'] = "1 August 2010  (USA)";
         $expectedRubicon['director'] = array();
