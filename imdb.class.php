@@ -54,7 +54,7 @@ class IMDB
 
     const IMDB_SEARCH = '~<td class="result_text"> <a href="\/title\/(tt\d{6,})\/(?:.*)"(?:\s*)>(?:.*)<\/a>~Ui';
     const IMDB_SEASONS = '~(?:episodes\?season=(\d+))~Ui';
-    const IMDB_TITLE = '~property=\'og:title\' content="(.*)"~Ui';
+    const IMDB_TITLE = '~property=\'og:title\' content="(.*)(\s\(.*)?"~Ui';
     const IMDB_TITLE_ORIG = '~<span class="title-extra">(.*) <i>\(original title\)<\/i></span>~Ui';
     const IMDB_URL = '~http://(?:.*\.|.*)imdb.com/(?:t|T)itle(?:\?|/)(..\d+)~i';
     
