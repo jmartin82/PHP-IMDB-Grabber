@@ -54,8 +54,9 @@ class IMDB
 
     const IMDB_SEARCH = '~<td class="result_text"> <a href="\/title\/(tt\d{6,})\/(?:.*)"(?:\s*)>(?:.*)<\/a>~Ui';
     const IMDB_SEASONS = '~(?:episodes\?season=(\d+))~Ui';
-    const IMDB_TITLE = '~property=\'og:title\' content="(.*)(\s\(.*)?"~Ui';
-    const IMDB_TITLE_ORIG = '~<span class="title-extra">(.*) <i>\(original title\)<\/i></span>~Ui';
+
+    const IMDB_TITLE = '~meta name="title" content="(.*)(\s\(.*)?"~Ui';
+    const IMDB_TITLE_ORIG = '~property=\'og:title\' content="(.*)(\s\(.*)?"~Ui';
     const IMDB_URL = '~http://(?:.*\.|.*)imdb.com/(?:t|T)itle(?:\?|/)(..\d+)~i';
     
 
@@ -733,16 +734,13 @@ class IMDB
          if ($this->isReady) {
             if (true === $bForceLocal) {
                 $sMatch = $this->matchRegex($this->_strSource, self::IMDB_TITLE_ORIG, 1);
+                $sMatch = preg_replace('~\(\d{4}\)$~Ui', '', $sMatch);
                 if (false !== $sMatch && "" !== $sMatch) {
                     return $this->cleanString($sMatch);
                 }
             }
 
-
-
             $sMatch = $this->matchRegex($this->_strSource, self::IMDB_TITLE, 1);
-
-
             $sMatch = preg_replace('~\(\d{4}\)$~Ui', '', $sMatch);
             if (false !== $sMatch && "" !== $sMatch) {
                 return $this->cleanString($sMatch);

@@ -22,6 +22,7 @@ class DataTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($expected['release_date'],$oIMDB->getReleaseDate(),"Check ReleaseDate");
             $this->assertEquals($expected['director'],$oIMDB->getDirector(),"Check Director");
             $this->assertEquals($expected['writer'],$oIMDB->getWriter(),"Check Writer");
+
             $this->assertEquals($expected['company'],$oIMDB->getCompany(),"Check Company");
             $this->assertEquals($expected['description'],$oIMDB->getDescription(),"Check Description"); 
              //only test one
@@ -187,11 +188,65 @@ class DataTest extends PHPUnit_Framework_TestCase
 
         
 
+        //Isla minima
+        $expectedIslaMinima = array();
+        $expectedIslaMinima['type'] = "movie";
+        $expectedIslaMinima['released'] = true;
+        $expectedIslaMinima['seasons'] = 0;
+        $expectedIslaMinima['genre'] = array('Crime','Thriller');
+        $expectedIslaMinima['runtime'] = 105;
+        $expectedIslaMinima['year'] = 2014;
+        $expectedIslaMinima['title'] = "La isla mínima";
+        $expectedIslaMinima['country'] = array('Spain');
+        $expectedIslaMinima['release_date'] = "26 September 2014  (Spain)";
+        $expectedIslaMinima['director'] = array(array("imdb" => '0735705',"name" => 'Alberto Rodríguez'));
+        $expectedIslaMinima['writer'] = array( array(
+          'imdb'=>'1943791',
+          'name'=>'Rafael Cobos'
+          ),
+        array(
+          'imdb'=>'0735705',
+          'name'=>'Alberto Rodríguez'
+          ));
+
+        $expectedIslaMinima['company'] = array( array(
+          'imdb'=>'0435170',
+          'name'=>'Atresmedia Cine'
+          ),
+        array(
+          'imdb'=>'0296182',
+          'name'=>'Atípica Films'
+          )
+        ,
+        array(
+          'imdb'=>'0367050',
+          'name'=>'Sacromonte Films'
+          )
+        );
+
+        $expectedIslaMinima['languages'] = array("Spanish");
+        $expectedIslaMinima['cast'] = array( array(
+            "name" => "Javier Gutiérrez",
+            "imdb" => "0349522",
+            "role" => "Juan"
+            ),
+        array(
+            "name" => "Raúl Arévalo",
+            "imdb" => "1666855",
+            "role" => "Pedro"
+            )
+        );
+
+        $expectedIslaMinima['akas'] = array();
+        $expectedIslaMinima['description'] = "In the MARSHLAND a serial killer is on the loose. Two homicide detectives who appear to be poles apart must settle their differences and bring the murderer to justice before more young women lose their lives.";
+
+
 
         return array(
           array("tt0816692", $expectedInterstellar),
           array("tt4329922", $expectedPunch),
           array("tt1389371", $expectedRubicon),
+          array("tt3253930", $expectedIslaMinima),
           );
     }
 }
