@@ -820,6 +820,7 @@ class IMDB
                 // some cases there's no info in that place
                 if (is_string($strReturn)) {
                     $strReturn = str_replace("&nbsp;-&nbsp;", '', $strReturn);
+                    $strReturn = str_replace("&nbsp;", '', $strReturn);
                     $type = trim($strReturn, " ");
                     if (empty($type)){
                         return "movie";
