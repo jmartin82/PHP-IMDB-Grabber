@@ -22,7 +22,6 @@ class DataTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($expected['release_date'],$oIMDB->getReleaseDate(),"Check ReleaseDate");
             $this->assertEquals($expected['director'],$oIMDB->getDirector(),"Check Director");
             $this->assertEquals($expected['writer'],$oIMDB->getWriter(),"Check Writer");
-
             $this->assertEquals($expected['company'],$oIMDB->getCompany(),"Check Company");
             $this->assertEquals($expected['description'],$oIMDB->getDescription(),"Check Description"); 
              //only test one
@@ -237,8 +236,20 @@ class DataTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $expectedIslaMinima['akas'] = array();
+
+
+        $expectedIslaMinima['akas'] =  array( array(
+            "title" => "A legkisebb sziget",
+            "country" => "Hungary",
+            ),
+        array(
+            "title" => "Stare grzechy maja dlugie cienie",
+            "country" => "Poland",
+            )
+        );
+
         $expectedIslaMinima['description'] = "In the MARSHLAND a serial killer is on the loose. Two homicide detectives who appear to be poles apart must settle their differences and bring the murderer to justice before more young women lose their lives.";
+
 
 
 
