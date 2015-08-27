@@ -8,4 +8,4 @@ php:
 
 install: composer install --dev
 
-script: phpunit test/DataTest.php
+script: ./vendor/bin/phpunit test/DataTest.php
