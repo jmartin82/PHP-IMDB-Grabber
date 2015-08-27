@@ -112,7 +112,13 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedPunch['title'] = "Punch";
         $expectedPunch['country'] = array('South Korea');
         $expectedPunch['release_date'] = "15 December 2014  (South Korea)";
-        $expectedPunch['director'] = array();
+        $expectedPunch['director'] = array(
+            0 =>
+                array (
+                    'imdb' => '6118272',
+                    'name' => 'Myung Woo Lee',
+                ),
+        );
         $expectedPunch['writer'] = array(
             0 =>
                 array (
@@ -155,7 +161,68 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedRubicon['title'] = "Rubicon";
         $expectedRubicon['country'] = array('USA');
         $expectedRubicon['release_date'] = "1 August 2010  (USA)";
-        $expectedRubicon['director'] = array();
+        $expectedRubicon['director'] = array(
+            0 =>
+                array (
+                    'imdb' => '0687964',
+                    'name' => 'Jeremy Podeswa',
+                ),
+            1 =>
+                array (
+                    'imdb' => '0026442',
+                    'name' => 'Brad Anderson',
+                ),
+            2 =>
+                array (
+                    'imdb' => '0080601',
+                    'name' => 'Ed Bianchi',
+                ),
+            3 =>
+                array (
+                    'imdb' => '0111303',
+                    'name' => 'Henry Bromell',
+                ),
+            4 =>
+                array (
+                    'imdb' => '0002339',
+                    'name' => 'Allen Coulter',
+                ),
+            5 =>
+                array (
+                    'imdb' => '0272704',
+                    'name' => 'Guy Ferland',
+                ),
+            6 =>
+                array (
+                    'imdb' => '0327064',
+                    'name' => 'Nick Gomez',
+                ),
+            7 =>
+                array (
+                    'imdb' => '0330360',
+                    'name' => 'Keith Gordon',
+                ),
+            8 =>
+                array (
+                    'imdb' => '0542960',
+                    'name' => 'Seith Mann',
+                ),
+            9 =>
+                array (
+                    'imdb' => '0002399',
+                    'name' => 'Alik Sakharov',
+                ),
+            10 =>
+                array (
+                    'imdb' => '0806252',
+                    'name' => 'Michael Slovis',
+                ),
+            11 =>
+                array (
+                    'imdb' => '0851930',
+                    'name' => 'Alan Taylor',
+                ),
+        );
         $expectedRubicon['writer'] = array(
             0 =>
                 array (
