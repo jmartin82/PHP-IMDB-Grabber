@@ -6,9 +6,9 @@ class DataTest extends PHPUnit_Framework_TestCase
      */
     public function testMediaExtraction($imdbId, $expected)
     {
-            //create the url
+        //create the url
         $imdb_url = 'http://www.imdb.com/title/tt' . $imdbId . '/';
-            //get essentian information
+        //get essentian information
         $oIMDB = new IMDB($imdb_url);
         if ($oIMDB->isReady) {
             $this->assertEquals($expected['type'],$oIMDB->getType(),"Check Type");
@@ -23,38 +23,38 @@ class DataTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($expected['director'],$oIMDB->getDirector(),"Check Director");
             $this->assertEquals($expected['writer'],$oIMDB->getWriter(),"Check Writer");
             $this->assertEquals($expected['company'],$oIMDB->getCompany(),"Check Company");
-            $this->assertEquals($expected['description'],$oIMDB->getDescription(),"Check Description"); 
-             //only test one
-            
+            $this->assertEquals($expected['description'],$oIMDB->getDescription(),"Check Description");
+            //only test one
+
             if(is_array($expected['akas']) && sizeof($expected['akas']) > 0){
-              $this->assertEquals($expected['akas'][0],$oIMDB->getAkas()[0],"Check Akas");
+                $this->assertEquals($expected['akas'][0],$oIMDB->getAkas()[0],"Check Akas");
             } else {
-              $this->assertEquals($expected['akas'],$oIMDB->getAkas(),"Check Akas as empty array");
+                $this->assertEquals($expected['akas'],$oIMDB->getAkas(),"Check Akas as empty array");
             }
 
             if(is_array($expected['cast']) && sizeof($expected['cast']) > 0){
-              $this->assertEquals($expected['cast'][0],$oIMDB->getCastAndCharacter()[0],"Check Cast");
+                $this->assertEquals($expected['cast'][0],$oIMDB->getCastAndCharacter()[0],"Check Cast");
             } else {
-              $this->assertEquals($expected['cast'],$oIMDB->getCastAndCharacter(),"Check Cast as empty");
+                $this->assertEquals($expected['cast'],$oIMDB->getCastAndCharacter(),"Check Cast as empty");
             }
             $this->assertEquals($expected['languages'],$oIMDB->getLanguages(),"Check Languages");
 
-            }
-            else {
-              throw new Exception("Error Processing Request", 1);
-          }
+        }
+        else {
+            throw new Exception("Error Processing Request", 1);
+        }
 
-      }
+    }
 
-      public function imdbProvider()
-      {
+    public function imdbProvider()
+    {
 
         //interestellar
         $expectedInterstellar = array();
         $expectedInterstellar['type'] = "movie";
         $expectedInterstellar['released'] = true;
         $expectedInterstellar['seasons'] = 0;
-        $expectedInterstellar['genre'] = array('Adventure','Sci-Fi');
+        $expectedInterstellar['genre'] = array('Adventure','Drama','Sci-Fi');
         $expectedInterstellar['runtime'] = 169;
         $expectedInterstellar['year'] = 2014;
         $expectedInterstellar['title'] = "Interstellar";
@@ -63,42 +63,42 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedInterstellar['director'] = array(array('imdb' =>"0634240","name" =>"Christopher Nolan"));
         $expectedInterstellar['writer'] = array(array('imdb' =>"0634300","name" =>"Jonathan Nolan"),array('imdb' =>"0634240","name" =>"Christopher Nolan"));
         $expectedInterstellar['company'] = array( array(
-          'imdb'=>'0023400',
-          'name'=>'Paramount Pictures'
-          ),
-        array(
-          'imdb'=>'0026840',
-          'name'=>'Warner Bros.'
-          ),
-        array(
-          'imdb'=>'0159111',
-          'name'=>'Legendary Pictures'
-          ));
+            'imdb'=>'0023400',
+            'name'=>'Paramount Pictures'
+        ),
+            array(
+                'imdb'=>'0026840',
+                'name'=>'Warner Bros.'
+            ),
+            array(
+                'imdb'=>'0159111',
+                'name'=>'Legendary Pictures'
+            ));
         $expectedInterstellar['languages'] = array("English");
         $expectedInterstellar['cast'] = array( array(
             "name" => "Ellen Burstyn",
             "imdb" => "0000995",
             "role" => "Murph"
-            ),
-        array(
+        ),
+            array(
 
-            "name" => "Matthew McConaughey",
-            "imdb" => "0000190",
-            "role" => "Cooper"
+                "name" => "Matthew McConaughey",
+                "imdb" => "0000190",
+                "role" => "Cooper"
             )
         );
 
         $expectedInterstellar['akas'] = array( array(
-          "title" => "Interestelar",
-          "country" => "Argentina"
-          ),array(
-          "title" => "Ulduzlararasi",
-          "country" => "Azerbaijan"
-          )
-          );
+            "title" => "Interestelar",
+            "country" => "Argentina"
+        ),array(
+            "title" => "Ulduzlararasi",
+            "country" => "Azerbaijan"
+        )
+        );
 
 
-        $expectedInterstellar['description'] = "A team of explorers travel through a wormhole in an attempt to ensure humanity's survival.";
+        $expectedInterstellar['description'] = "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.";
 
 
         //punch (n/A in Tviso)
@@ -113,22 +113,28 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedPunch['country'] = array('South Korea');
         $expectedPunch['release_date'] = "15 December 2014  (South Korea)";
         $expectedPunch['director'] = array();
-        $expectedPunch['writer'] = array();
+        $expectedPunch['writer'] = array(
+            0 =>
+                array (
+                    'imdb' => '5781092',
+                    'name' => 'Kyung-soo Park',
+                ),
+        );
         $expectedPunch['company'] = array( array(
-          'imdb'=>'0215344',
-          'name'=>'HB Entertainment'
-          ));
+            'imdb'=>'0215344',
+            'name'=>'HB Entertainment'
+        ));
         $expectedPunch['languages'] = array("Korean");
         $expectedPunch['cast'] = array( array(
             "name" => "Rae-won Kim",
             "imdb" => "0453640",
             "role" => "Park Jung-Hwan"
-            ),
-        array(
+        ),
+            array(
 
-            "name" => "Ah-jung Kim",
-            "imdb" => "2098258",
-            "role" => "Shin Ha-Gyung"
+                "name" => "Ah-jung Kim",
+                "imdb" => "2098258",
+                "role" => "Shin Ha-Gyung"
             )
         );
 
@@ -150,42 +156,83 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedRubicon['country'] = array('USA');
         $expectedRubicon['release_date'] = "1 August 2010  (USA)";
         $expectedRubicon['director'] = array();
-        $expectedRubicon['writer'] = array();
+        $expectedRubicon['writer'] = array(
+            0 =>
+                array (
+                    'imdb' => '0395842',
+                    'name' => 'Jason Horwitch',
+                ),
+            1 =>
+                array (
+                    'imdb' => '0730446',
+                    'name' => 'Richard Robbins',
+                ),
+            2 =>
+                array (
+                    'imdb' => '2469074',
+                    'name' => 'Nichole Beattie',
+                ),
+            3 =>
+                array (
+                    'imdb' => '0111303',
+                    'name' => 'Henry Bromell',
+                ),
+            4 =>
+                array (
+                    'imdb' => '0163910',
+                    'name' => 'Eliza Clark',
+                ),
+            5 =>
+                array (
+                    'imdb' => '0923738',
+                    'name' => 'Zack Whedon',
+                ),
+            6 =>
+                array (
+                    'imdb' => '1398578',
+                    'name' => 'Blake Masters',
+                ),
+            7 =>
+                array (
+                    'imdb' => '1339659',
+                    'name' => 'Michael Oates Palmer',
+                ),
+        );
         $expectedRubicon['company'] = array( array(
-          'imdb'=>'0183230',
-          'name'=>'Warner Horizon Television'
-          ),
-        array(
-          'imdb'=>'0019701',
-          'name'=>'American Movie Classics (AMC)'
-          ));
+            'imdb'=>'0183230',
+            'name'=>'Warner Horizon Television'
+        ),
+            array(
+                'imdb'=>'0019701',
+                'name'=>'American Movie Classics (AMC)'
+            ));
         $expectedRubicon['languages'] = array("English");
         $expectedRubicon['cast'] = array( array(
             "name" => "James Badge Dale",
             "imdb" => "0197647",
             "role" => "Will Travers"
-            ),
-        array(
-            "name" => "Jessica Collins",
-            "imdb" => "2193754",
-            "role" => "Maggie Young"
+        ),
+            array(
+                "name" => "Jessica Collins",
+                "imdb" => "2193754",
+                "role" => "Maggie Young"
             )
         );
 
-        $expectedRubicon['akas'] = array( 
-          array(
-            "title" => "Rubicón",
-            "country" => "Spain"
-          ),array(
-            "title" => "Рубикон",
-            "country" => "Russia"
-          )
+        $expectedRubicon['akas'] = array(
+            array(
+                "title" => "Rubicón",
+                "country" => "Spain"
+            ),array(
+                "title" => "Рубикон",
+                "country" => "Russia"
+            )
         );
 
 
         $expectedRubicon['description'] = "Will Travers is an analyst at a New York City-based federal intelligence agency who is thrown into a story where nothing is as it appears to be.";
 
-        
+
 
         //Isla minima
         $expectedIslaMinima = array();
@@ -200,27 +247,27 @@ class DataTest extends PHPUnit_Framework_TestCase
         $expectedIslaMinima['release_date'] = "26 September 2014  (Spain)";
         $expectedIslaMinima['director'] = array(array("imdb" => '0735705',"name" => 'Alberto Rodríguez'));
         $expectedIslaMinima['writer'] = array( array(
-          'imdb'=>'1943791',
-          'name'=>'Rafael Cobos'
-          ),
-        array(
-          'imdb'=>'0735705',
-          'name'=>'Alberto Rodríguez'
-          ));
+            'imdb'=>'1943791',
+            'name'=>'Rafael Cobos'
+        ),
+            array(
+                'imdb'=>'0735705',
+                'name'=>'Alberto Rodríguez'
+            ));
 
-        $expectedIslaMinima['company'] = array( array(
-          'imdb'=>'0435170',
-          'name'=>'Atresmedia Cine'
-          ),
-        array(
-          'imdb'=>'0296182',
-          'name'=>'Atípica Films'
-          )
-        ,
-        array(
-          'imdb'=>'0367050',
-          'name'=>'Sacromonte Films'
-          )
+        $expectedIslaMinima['company'] = array(
+            array(
+                'imdb'=>'0225092',
+                'name'=>'AXN'
+            ),
+            array(
+                'imdb'=>'0435170',
+                'name'=>'Atresmedia Cine'
+            ),
+            array(
+                'imdb'=>'0445833',
+                'name'=>'Atresmedia'
+            ),
         );
 
         $expectedIslaMinima['languages'] = array("Spanish");
@@ -228,24 +275,57 @@ class DataTest extends PHPUnit_Framework_TestCase
             "name" => "Javier Gutiérrez",
             "imdb" => "0349522",
             "role" => "Juan"
-            ),
-        array(
-            "name" => "Raúl Arévalo",
-            "imdb" => "1666855",
-            "role" => "Pedro"
+        ),
+            array(
+                "name" => "Raúl Arévalo",
+                "imdb" => "1666855",
+                "role" => "Pedro"
             )
         );
 
 
 
-        $expectedIslaMinima['akas'] =  array( array(
-            "title" => "A legkisebb sziget",
-            "country" => "Hungary",
-            ),
-        array(
-            "title" => "Stare grzechy maja dlugie cienie",
-            "country" => "Poland",
-            )
+        $expectedIslaMinima['akas'] =  array(
+            0 =>
+                array (
+                    'title' => 'La isla mínima',
+                    'country' => 'Chile',
+                ),
+            1 =>
+                array (
+                    'title' => 'Marshland',
+                    'country' => 'Denmark',
+                ),
+            2 =>
+                array (
+                    'title' => 'Το μικρό νησί',
+                    'country' => 'Greece',
+                ),
+            3 =>
+                array (
+                    'title' => 'Mocsárvidék',
+                    'country' => 'Hungary',
+                ),
+            4 =>
+                array (
+                    'title' => 'Stare grzechy maja dlugie cienie',
+                    'country' => 'Poland',
+                ),
+            5 =>
+                array (
+                    'title' => 'Najmanje ostrvo',
+                    'country' => 'Serbia',
+                ),
+            6 =>
+                array (
+                    'title' => 'Миниатюрный остров',
+                    'country' => 'Russia',
+                ),
+            7 =>
+                array (
+                    'title' => 'Marshland',
+                    'country' => 'Sweden',
+                ),
         );
 
         $expectedIslaMinima['description'] = "In the MARSHLAND a serial killer is on the loose. Two homicide detectives who appear to be poles apart must settle their differences and bring the murderer to justice before more young women lose their lives.";
@@ -254,11 +334,11 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 
         return array(
-          array("tt0816692", $expectedInterstellar),
-          array("tt4329922", $expectedPunch),
-          array("tt1389371", $expectedRubicon),
-          array("tt3253930", $expectedIslaMinima),
-          );
+            array("tt1389371", $expectedRubicon),
+            array("tt4329922", $expectedPunch),
+            array("tt0816692", $expectedInterstellar),
+            array("tt3253930", $expectedIslaMinima),
+        );
     }
 }
 ?>
