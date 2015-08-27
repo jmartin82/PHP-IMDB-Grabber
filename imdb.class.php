@@ -44,7 +44,10 @@ class IMDB
     const IMDB_ID = '~((?:tt\d{6,})|(?:itle\?\d{6,}))~';
     const IMDB_LANGUAGES = '~<a href="\/language\/(\w+)(\"|\?).*\n?.*>(\w+)<\/a~Ui';
     const IMDB_LOCATION = '~href="\/search\/title\?locations=(.*)">(.*)<\/a>~Ui';
+
     const IMDB_NAME = '~href="/name/nm(\d+)/(?:.*)"[ ]?itemprop=\'(?:\w+)\'><span class="itemprop" itemprop="name">(.*)</span>~Ui';
+    const IMDB_FULLCREDITS_NAME = '~href=\"\/name\/nm(\d+)\/.*\"[^>]*>\s+(.*)~';
+
     const IMDB_PLOT = '~Storyline</h2>\s+<div class="inline canwrap" itemprop="description">\s+<p>(.*)(?:<em|<\/p>|<\/div>)~Ui';
     const IMDB_POSTER = '~"src="(.*)"itemprop="image" \/>~Ui';
     const IMDB_RATING = '~<span itemprop="ratingValue">(.*)</span>~Ui';
@@ -65,9 +68,7 @@ class IMDB
     const IMDB_YEAR         = '~<title>.*\s\(.*(\d{4}).*<\/title>~Ui';
 
     const IMDB_WRITER = '~(?:Writer|Writers):</h4>(.*)</div>~Ui';
-    // const IMDB_WRITER_FULLCREDITS = '~Series Writing Credits(.|[\\r\\n])*<h4~Umi';
     const IMDB_WRITER_FULLCREDITS = '~Series Writing Credits(.*)<h4~Uis';
-    const IMDB_FULLCREDITS_NAME = '~href=\"\/name\/nm(\d+)\/.*\"[^>]*>\s+(.*)~';
 
     const IMDB_TYPE = '~<div class="infobar">(.*)<~Ui';
     const IMDB_IS_RELEASED = '~<div class="star-box giga-star">(.*)</div>~Ui';
