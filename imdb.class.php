@@ -37,13 +37,17 @@ class IMDB
 
     const IMDB_DESCRIPTION = '~<p itemprop="description">(.*)(?:<a|<\/p>)~Ui';
     const IMDB_DIRECTOR = '~(?:Director|Directors):</h4>(.*)</div>~Ui';
-    
+    const IMDB_DIRECTOR_FULLCREDITS = '~Directed by(.*)<h4~Uis';
+
     const IMDB_GENRE        = '~href="/genre/(.*)(?:\?.*)"(?:\s+|)>(.*)</a>~Ui';
 
     const IMDB_ID = '~((?:tt\d{6,})|(?:itle\?\d{6,}))~';
     const IMDB_LANGUAGES = '~<a href="\/language\/(\w+)(\"|\?).*\n?.*>(\w+)<\/a~Ui';
     const IMDB_LOCATION = '~href="\/search\/title\?locations=(.*)">(.*)<\/a>~Ui';
+
     const IMDB_NAME = '~href="/name/nm(\d+)/(?:.*)"[ ]?itemprop=\'(?:\w+)\'><span class="itemprop" itemprop="name">(.*)</span>~Ui';
+    const IMDB_FULLCREDITS_NAME = '~href=\"\/name\/nm(\d+)\/.*\"[^>]*>\s+(.*)~';
+
     const IMDB_PLOT = '~Storyline</h2>\s+<div class="inline canwrap" itemprop="description">\s+<p>(.*)(?:<em|<\/p>|<\/div>)~Ui';
     const IMDB_POSTER = '~"src="(.*)"itemprop="image" \/>~Ui';
     const IMDB_RATING = '~<span itemprop="ratingValue">(.*)</span>~Ui';
@@ -58,14 +62,14 @@ class IMDB
     const IMDB_TITLE = '~meta name="title" content="(.*)(\s\(.*)?"~Ui';
     const IMDB_TITLE_ORIG    = '~<span class="title-extra" itemprop="name">(\s+)?"(.*)"~Uis';
 
-
     const IMDB_URL = '~http://(?:.*\.|.*)imdb.com/(?:t|T)itle(?:\?|/)(..\d+)~i';
     
 
     const IMDB_YEAR         = '~<title>.*\s\(.*(\d{4}).*<\/title>~Ui';
 
-
     const IMDB_WRITER = '~(?:Writer|Writers):</h4>(.*)</div>~Ui';
+    const IMDB_WRITER_FULLCREDITS = '~Series Writing Credits(.*)<h4~Uis';
+
     const IMDB_TYPE = '~<div class="infobar">(.*)<~Ui';
     const IMDB_IS_RELEASED = '~<div class="star-box giga-star">(.*)</div>~Ui';
     
@@ -80,6 +84,7 @@ class IMDB
     private $_strUrl = null;
     // IMDb source.
     private $_strSource = null;
+    private $_strCreditsSource = null;
     // IMDb cache.
     private $_strCache = 0;
     // IMDb movie id.
@@ -137,7 +142,14 @@ class IMDB
     private function matchRegex($strContent, $strRegex, $intIndex = NULL)
     {
         $arrMatches = false;
+
         preg_match_all($strRegex, $strContent, $arrMatches);
+
+//        if ($strRegex == self::IMDB_WRITER_FULLCREDITS) {
+//            print_r($arrMatches);
+//            die();
+//        }
+
         if ($arrMatches === false)
             return false;
         if ($intIndex != NULL && is_int($intIndex)) {
@@ -544,8 +556,10 @@ class IMDB
     public function getCompany()
     {
         if ($this->isReady) {
+
             $strContainer = $this->matchRegex($this->_strSource, IMDB::IMDB_COMPANY, 1);
             $arrReturned  = $this->matchRegex($strContainer, IMDB::IMDB_COMPANY_NAME);
+
             if (count($arrReturned[2])) {
                 foreach ($arrReturned[2] as $i => $strName) {
                     $company     = strip_tags($strName);
@@ -554,9 +568,11 @@ class IMDB
                         'name' => trim($company)
                     );
                 }
+
                 return $arrReturn;
             }
         }
+
         return $this->arrNotFound;
     }
     
@@ -610,15 +626,17 @@ class IMDB
         if ($this->isReady) {
             $strContainer = $this->matchRegex($this->_strSource, IMDB::IMDB_DIRECTOR, 1);
             $arrReturned  = $this->matchRegex($strContainer, IMDB::IMDB_NAME);
-            if (count($arrReturned[2])) {
-                foreach ($arrReturned[2] as $i => $strName) {
-                    $arrReturn[] = array(
-                        'imdb' => trim($arrReturned[1][$i]),
-                        'name' => trim($strName)
-                    );
-                }
-                return $arrReturn;
-            }
+
+            $array = $this->buildPersonArray($arrReturned);
+
+            if (! empty($array)) return $array;
+
+            /*+
+             *  if we dont get directors its hidden on "see more" @ cast
+             *  Lets find them!
+             *
+             */
+            return $this->getDirectorsFromFullCredits();
         }
         return $this->arrNotFound;
     }
@@ -776,17 +794,60 @@ class IMDB
         if ($this->isReady) {
             $strContainer = $this->matchRegex($this->_strSource, IMDB::IMDB_WRITER, 1);
             $arrReturned  = $this->matchRegex($strContainer, IMDB::IMDB_NAME);
-            if (count($arrReturned[2])) {
-                foreach ($arrReturned[2] as $i => $strName) {
-                    $arrReturn[] = array(
-                        'imdb' => trim($arrReturned[1][$i]),
-                        'name' => trim($strName)
-                    );
-                }
-                return $arrReturn;
-            }
+
+            $array = $this->buildPersonArray($arrReturned);
+
+            if (! empty($array)) return $array;
+
+            /*+
+             *  if we dont get writers its hidden on "see more" @ cast
+             *  Lets find them!
+             *
+             */
+            return $this->getWritersFromFullCredits();
         }
+
         return $this->arrNotFound;
+    }
+
+    public function buildPersonArray($array) {
+        if (count($array[2])) {
+            $arrReturn = [];
+
+            foreach ($array[2] as $i => $strName) {
+                $arrReturn[] = array(
+                    'imdb' => trim($array[1][$i]),
+                    'name' => trim($strName)
+                );
+            }
+
+            return $arrReturn;
+        }
+
+        return $this->arrNotFound;
+    }
+
+    protected function getCredits() {
+        if ($this->_strCreditsSource) {
+            return $this->_strCreditsSource;
+        }
+
+        $arrInfo = $this->doCurl('http://www.imdb.com/title/tt'.$this->_strId.'/fullcredits', false);
+        return $this->_strCreditsSource = $arrInfo['contents'];
+    }
+
+    public function getWritersFromFullCredits() {
+        $strContainer = $this->matchRegex($this->getCredits(), IMDB::IMDB_WRITER_FULLCREDITS, 1);
+        $arrReturned  = $this->matchRegex($strContainer, IMDB::IMDB_FULLCREDITS_NAME);
+
+        return $this->buildPersonArray($arrReturned);
+    }
+
+    public function getDirectorsFromFullCredits() {
+        $strContainer = $this->matchRegex($this->getCredits(), IMDB::IMDB_DIRECTOR_FULLCREDITS, 1);
+        $arrReturned  = $this->matchRegex($strContainer, IMDB::IMDB_FULLCREDITS_NAME);
+
+        return $this->buildPersonArray($arrReturned);
     }
     
     /**
